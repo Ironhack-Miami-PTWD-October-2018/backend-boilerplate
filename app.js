@@ -15,7 +15,8 @@ const session = require('express-session');
 const passportSetup =  require('./config/passport/passport-setup');
 
 mongoose
-  .connect('mongodb://localhost/phones-backend', {useNewUrlParser: true})
+// .connect('mongodb://localhost/phones-backend', {useNewUrlParser: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -56,7 +57,8 @@ app.locals.title = 'Express - Generated with IronGenerator';
 // handle session here:
 // app.js
 app.use(session({
-  secret: "some super secret goes here",
+  // secret: "some super secret goes here",
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));
