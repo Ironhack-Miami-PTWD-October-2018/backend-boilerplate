@@ -14,6 +14,10 @@ const session = require('express-session');
 // import passport docs from config folder
 const passportSetup =  require('./config/passport/passport-setup');
 
+
+// add CORS to handle cross-origin communication between your two apps:
+const cors          = require("cors");
+
 mongoose
 // .connect('mongodb://localhost/phones-backend', {useNewUrlParser: true})
   .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
@@ -53,6 +57,17 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
+
+
+// Allow Cross-Origin Resource Sharing (CORS)
+// (allows access to the API from the frontend JS on a different domain/origin)
+app.use(cors({
+  // allow other domains/origins to send cookies
+  credentials: true,
+  // the array of domains/origins we want cookies from (just the React app)
+  origin: [ "http://localhost:3000" ]
+}));
+
 
 // handle session here:
 // app.js
